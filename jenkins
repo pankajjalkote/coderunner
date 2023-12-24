@@ -1,0 +1,30 @@
+pipeline {
+
+agent any 
+
+stages {
+
+stage('execute cucumber test'){
+
+	steps{
+
+		bat "docker-compose up"
+	}
+
+}
+
+stage('Bring down compose'){
+
+	steps{
+
+		bat "docker-compose down"
+	}
+
+}
+
+
+
+
+}
+
+}
