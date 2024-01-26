@@ -4,18 +4,36 @@ agent any
 
 stages {
 
-stage('execute cucumber test'){
+stage('pull the image'){
 
 	steps{
 
-		bat "docker-compose up"
+		bat "docker pull pankajjalkote/entireconfigurationinymlimage"
 	}
 
 }
 
-stage('Bring down compose'){
+stage('Starting the grid'){
 
 	steps{
+
+		bat "docker-compose up -d hub chrome firefox"
+	}
+
+}
+stage('Executing cucumber testcases'){
+
+	steps{
+
+		bat "docker-compose up cucumbertestcases"
+	}
+
+}
+
+
+post{
+
+	always{
 
 		bat "docker-compose down"
 	}
