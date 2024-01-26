@@ -1,46 +1,40 @@
 pipeline {
+    agent any
 
-agent any 
+    environment {
+        DOCKER_HUB_IMAGE = 'pankajjalkote/entireconfigurationinymlimage'
+    }
 
-stages {
+    stages {
+        stage('Pull the image') {
+            steps {
+            
+                    bat "docker pull pankajjalkote/entireconfigurationinymlimage"
+                
+            }
+        }
 
-    stage('pull the image'){
+        stage('Starting the grid') {
+            steps {
+            
+                    bat "docker-compose up -d hub chrome firefox"
+                
+            }
+        }
 
-	steps{
+        stage('Executing cucumber test cases') {
+            steps {
+                
+                    bat "docker-compose up cucumbertestcases"
+                
+            }
+        }
+    }
 
-		bat "docker pull pankajjalkote/entireconfigurationinymlimage"
-	}
-
-}
-
-stage('Starting the grid'){
-
-	steps{
-
-		bat "docker-compose up -d hub chrome firefox"
-	}
-
-}
-stage('Executing cucumber testcases'){
-
-	steps{
-
-		bat "docker-compose up cucumbertestcases"
-	}
-
-}
-
-
-post{
-
-always{
-
-		bat "docker-compose down"
-	}
-
-}
-
-}
-
-}
-
+    post {
+        always {
+            
+                bat "docker-compose down"
+            }
+        }
+    }
