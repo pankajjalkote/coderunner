@@ -4,7 +4,7 @@ agent any
 
 stages {
 
-stage('pull the image'){
+    stage('pull the image'){
 
 	steps{
 
@@ -33,16 +33,12 @@ stage('Executing cucumber testcases'){
 
 post{
 
-	always{
+always{
 
 		bat "docker-compose down"
 	}
 
 }
 
-
-
-
 }
 
-}
